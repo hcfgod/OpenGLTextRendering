@@ -8,7 +8,7 @@ namespace Echo
 	class Window
 	{
 	public:
-		Window();
+		Window(const char* title, glm::vec2 initalWindowSize);
 		~Window();
 
 		bool ShouldWindowClose();
@@ -18,6 +18,6 @@ namespace Echo
 
 		GLFWwindow* GetGlfwWindow();
 	private:
-		GLFWwindow* m_Window;
+		GLFWwindow* m_Window = nullptr;
 	};
 }

@@ -2,9 +2,9 @@
 
 namespace Echo
 {
-    Window::Window()
+    Window::Window(const char* title, glm::vec2 initalWindowSize)
     {
-        m_Window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+        m_Window = glfwCreateWindow(initalWindowSize.x, initalWindowSize.y, title, NULL, NULL);
 
         if (!m_Window)
         {

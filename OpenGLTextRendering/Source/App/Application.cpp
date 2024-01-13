@@ -10,18 +10,23 @@ namespace Echo
 
 	Application::Application()
 	{
-		glfwInit();
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-		m_Window = new Window();
-		glfwSetFramebufferSizeCallback(m_Window->GetGlfwWindow(), framebuffer_size_callback);
-
-		glewInit();
-
-        settings.SetDefaultWindowSize(m_Window->GetWindowSize());
+		
 	}
+
+    void Application::Initialize(const char* title, int initalWindowWidth, int initalWindowHeight)
+    {
+        glfwInit();
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+        m_Window = new Window(title, glm::vec2(initalWindowWidth, initalWindowHeight));
+        settings.SetDefaultWindowSize(m_Window->GetWindowSize());
+
+        glfwSetFramebufferSizeCallback(m_Window->GetGlfwWindow(), framebuffer_size_callback);
+
+        glewInit();
+    }
 
 	Application::~Application()
 	{

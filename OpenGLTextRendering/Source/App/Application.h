@@ -18,6 +18,7 @@ namespace Echo
 
 		ApplicationSettings& GetSettings();
 
+		void Initialize(const char* title, int initalWindowWidth, int initalWindowHeight);
 		void Run();
 		void Awake();
 		void Render();
@@ -30,7 +31,7 @@ namespace Echo
 
 		ApplicationSettings settings;
 
-		Window* m_Window;
+		Window* m_Window = nullptr;
 		TextRenderer textRenderer;
 	};
 }
