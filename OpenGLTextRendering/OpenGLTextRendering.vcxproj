@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="Libraries\Includes\GLM\detail\glm.cpp" />
     <ClCompile Include="Source\App\Application.cpp" />
+    <ClCompile Include="Source\App\ApplicationSettings.cpp" />
     <ClCompile Include="Source\App\Window\Window.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
@@ -531,6 +532,7 @@
     <ClInclude Include="Libraries\Includes\GLM\vec4.hpp" />
     <ClInclude Include="Libraries\Includes\GLM\vector_relational.hpp" />
     <ClInclude Include="Source\App\Application.h" />
+    <ClInclude Include="Source\App\ApplicationSettings.h" />
     <ClInclude Include="Source\App\Window\Window.h" />
     <ClInclude Include="Source\OrthographicCamera.h" />
     <ClInclude Include="Source\Shader.h" />

@@ -33,6 +33,9 @@
     <ClCompile Include="Source\TextRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\App\ApplicationSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries\Includes\GLEW\GL\eglew.h">
@@ -1218,6 +1221,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\OrthographicCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\ApplicationSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

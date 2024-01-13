@@ -49,7 +49,19 @@ namespace Echo
         std::vector<std::string> WrapText(std::string text, float scale, float containerWidth);
         void SetLineHeight(float height);
 
-        void RenderText(std::string text, const std::string& fontPath, float x, float y, float scale, glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f), float minScale = 0.25f, float maxScale = 1.0f, TextAlignment alignment = TextAlignment::LEFT, float containerWidth = 1000, float dynamicScalingAmount = 0.7f);
+        // Full version for advanced settings
+        void RenderText(const std::string& fontPath, const std::string& text, float x, float y, float scale, const glm::vec3& color, float minScale, float maxScale, TextAlignment alignment, float containerWidth, float dynamicScalingAmount);
+
+        void RenderText(const std::string& text, float x, float y);
+
+        void RenderText(const std::string& text, float x, float y, float scale);
+
+        void RenderText(const std::string& fontPath, const std::string& text, float x, float y, float scale);
+
+        void RenderText(const std::string& fontPath, const std::string& text, float x, float y, float scale, const glm::vec3& color);
+
+        void RenderText(const std::string& text, float x, float y, float scale, const glm::vec3& color);
+
     private:
         std::vector<float> vertexData;
         std::map<GLchar, Character> Characters{};

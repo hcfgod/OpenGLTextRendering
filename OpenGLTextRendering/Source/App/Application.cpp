@@ -19,6 +19,8 @@ namespace Echo
 		glfwSetFramebufferSizeCallback(m_Window->GetGlfwWindow(), framebuffer_size_callback);
 
 		glewInit();
+
+        settings.SetDefaultWindowSize(m_Window->GetWindowSize());
 	}
 
 	Application::~Application()
@@ -27,6 +29,16 @@ namespace Echo
 
         glfwTerminate();
 	}
+
+    Window* Application::GetWindow()
+    {
+        return m_Window;
+    }
+
+    ApplicationSettings& Application::GetSettings()
+    {
+        return settings;
+    }
 
 	void Application::Run()
 	{
@@ -48,8 +60,8 @@ namespace Echo
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        textRenderer.RenderText("This is a sample text", "amiri-regular.ttf", 5, 55, 0.2f, glm::vec3(1));
-        textRenderer.RenderText("This is a sample text", "Raleway-Italic.ttf", 5, 5, 0.5f, glm::vec3(1), 0.2f, 1.0f);
+        textRenderer.RenderText("This is a sample text", 5, 55, 0.5);
+        textRenderer.RenderText("Raleway-Italic.ttf", "This is a sample text", 5, 5, 0.5f, glm::vec3(1), 0.25f, 1.0f, TextAlignment::LEFT, 1000, 0.5f);
 
         glfwSwapBuffers(m_Window->GetGlfwWindow());
         glfwPollEvents();
@@ -61,11 +73,6 @@ namespace Echo
 
         OrthographicCamera& camera = OrthographicCamera::getInstance();
         camera.UpdateProjectionMatrix(width, height);
-    }
-
-    Window* Application::GetWindow()
-    {
-        return m_Window;
     }
 
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)

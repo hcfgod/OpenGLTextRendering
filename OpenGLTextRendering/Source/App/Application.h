@@ -3,6 +3,7 @@
 
 #include <App/Window/Window.h>
 #include <TextRenderer.h>
+#include "ApplicationSettings.h"
 
 namespace Echo
 {
@@ -15,6 +16,8 @@ namespace Echo
 			return instance;
 		}
 
+		ApplicationSettings& GetSettings();
+
 		void Run();
 		void Awake();
 		void Render();
@@ -24,6 +27,8 @@ namespace Echo
 	private:
 		Application();
 		~Application();
+
+		ApplicationSettings settings;
 
 		Window* m_Window;
 		TextRenderer textRenderer;

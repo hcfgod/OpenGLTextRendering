@@ -7,12 +7,13 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <App/Application.h>
 #include <OrthographicCamera.h>
+#include <App/Application.h>
 
 namespace Echo
 {
     OrthographicCamera& camera = OrthographicCamera::getInstance();
+    Application& app = Application::GetInstance();
 
     TextRenderer::TextRenderer()
     {
@@ -27,7 +28,7 @@ namespace Echo
 
     void TextRenderer::Init()
     {
-        Application& app = Application::GetInstance();
+        glm::vec2 defaultWindowSize = app.GetSettings().GetDefaultWindowSize();
 
         glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
@@ -35,7 +36,7 @@ namespace Echo
 
         shader = Shader("text.vs", "text.fs");
 
-        camera.setProjection(0.0f, static_cast<float>(app.GetWindow()->GetWindowSize().x), 0.0f, static_cast<float>(app.GetWindow()->GetWindowSize().y));
+        camera.setProjection(0.0f, static_cast<float>(defaultWindowSize.x), 0.0f, static_cast<float>(defaultWindowSize.y));
 
         shader.Activate();
 
@@ -50,7 +51,7 @@ namespace Echo
 
         // load font as face
         FT_Face face;
-        if (FT_New_Face(ft, "amiri-regular.ttf", 0, &face))
+        if (FT_New_Face(ft, app.GetSettings().GetDefaultFont().c_str(), 0, &face))
         {
             std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
             return;
@@ -278,8 +279,8 @@ namespace Echo
     {
         lineHeight = height;
     }
-
-    void TextRenderer::RenderText(std::string text, const std::string& fontPath, float x, float y, float scale, glm::vec3 color, float minScale, float maxScale, TextAlignment alignment, float containerWidth, float dynamicScalingAmount)
+ 
+    void TextRenderer::RenderText(const std::string& fontPath, const std::string& text, float x, float y, float scale, const glm::vec3& color, float minScale, float maxScale, TextAlignment alignment, float containerWidth, float dynamicScalingAmount)
     {
         // Load the font if not already loaded
         if (fonts.find(fontPath) == fonts.end()) 
@@ -332,15 +333,39 @@ namespace Echo
         }
     }
 
+    void TextRenderer::RenderText(const std::string& text, float x, float y)
+    {
+        RenderText(app.GetSettings().GetDefaultFont(), text, x, y, 1.0f, glm::vec3(1.0f), 0.25f, 1.0f, TextAlignment::LEFT, 1000, 0.7f);
+    }
+
+    void TextRenderer::RenderText(const std::string& text, float x, float y, float scale)
+    {
+        RenderText(app.GetSettings().GetDefaultFont(), text, x, y, scale, glm::vec3(1.0f), 0.25f, 1.0f, TextAlignment::LEFT, 1000, 0.7f);
+    }
+
+    void TextRenderer::RenderText(const std::string& fontPath, const std::string& text, float x, float y, float scale)
+    {
+        RenderText(fontPath, text, x, y, scale, glm::vec3(1.0f), 0.25f, 1.0f, TextAlignment::LEFT, 1000, 0.7f);
+    }
+
+    void TextRenderer::RenderText(const std::string& fontPath, const std::string& text, float x, float y, float scale, const glm::vec3& color)
+    {
+        RenderText(fontPath, text, x, y, scale, color, 0.25f, 1.0f, TextAlignment::LEFT, 1000, 0.7f);
+    }
+
+    void TextRenderer::RenderText(const std::string& text, float x, float y, float scale, const glm::vec3& color)
+    {
+        RenderText(app.GetSettings().GetDefaultFont(), text, x, y, scale, color, 0.25f, 1.0f, TextAlignment::LEFT, 1000, 0.7f);
+    }
+
     void TextRenderer::RenderLine(const FontData& font, std::string line, float x, float y, float scale, glm::vec3 color, float minScale, float maxScale, float dynamicScalingAmount)
     {
         Application& app = Application::GetInstance();
         int windowWidth = app.GetWindow()->GetWindowSize().x;
         int windowHeight = app.GetWindow()->GetWindowSize().y;
 
-        // Reference sizes (the base resolution you are targeting)
-        const float referenceWidth = 1280.0f;
-        const float referenceHeight = 720.0f;
+        const float referenceWidth = app.GetSettings().GetDefaultWindowSize().x; // inital width of the window
+        const float referenceHeight = app.GetSettings().GetDefaultWindowSize().y; // inital height of the window
 
         // Calculate scale factors for width and height
         float scaleW = static_cast<float>(windowWidth) / referenceWidth;
